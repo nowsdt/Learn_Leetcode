@@ -8,10 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.StringJoiner;
 
-import static cn.supertao.hot100.Solution001.twoSum1;
 
 /**
- * 给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
+ * 给出两个 非空 的链表用来表示两个非负的整数。
+ * 其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。
  *
  * 如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。
  *
@@ -32,25 +32,31 @@ import static cn.supertao.hot100.Solution001.twoSum1;
 public class Solution002 {
     public static void main(String[] args) {
         final List<ListNode> nodeList = getListNodes();
-        printListNode(nodeList.get(0));
+        final ListNode head1 = nodeList.get(0);
+        final ListNode head2 = nodeList.get(1);
+        printListNode(head1);
+        printListNode(head2);
+
+
 
     }
 
-    public static int[] twoSum0(Integer[] nums, int target) {
-        final HashMap<Integer, Integer> hashMap = MapUtils.newHashMapWithExpectedSize(nums.length);
+    public static ListNode addTwoNode(ListNode head1, ListNode head2) {
+        ListNode result = new ListNode(0);
 
-        for (int i = 0; i < nums.length; i++) {
-            hashMap.put(nums[i], i);
-        }
+        if (head1 == null && head2 != null) {
+            ListNode curr1 = head2;
+            result = new ListNode(curr1.getVal());
 
-
-        for (int i = 0; i < nums.length; i++) {
-            final int j = target - nums[i];
-            if (hashMap.containsKey(j) && j != nums[i]) {
-                return new int[]{i, hashMap.get(j)};
+            while ((curr1 = head2.getNext()) != null) {
+                ListNode temp = result;
+                result = new ListNode(curr1.getVal());
+                result.setNext(temp);
+                curr1 = curr1.getNext();
             }
         }
-        return null;
+
+        return result;
     }
 
     /**
