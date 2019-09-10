@@ -1,10 +1,8 @@
 package cn.supertao.hot100;
 
 import cn.supertao.hot100.domain.ListNode;
-import cn.supertao.utils.MapUtils;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -37,26 +35,42 @@ public class Solution002 {
         printListNode(head1);
         printListNode(head2);
 
+        final ListNode listNode = addTwoNode(head1, head2);
+        printListNode(listNode);
 
 
     }
 
-    public static ListNode addTwoNode(ListNode head1, ListNode head2) {
-        ListNode result = new ListNode(0);
+    public static ListNode addTwoNode(ListNode L1, ListNode L2) {
+        ListNode dummyHead = new ListNode(0);
+        int carry = 0;
+        ListNode curr = dummyHead;
 
-        if (head1 == null && head2 != null) {
-            ListNode curr1 = head2;
-            result = new ListNode(curr1.getVal());
+        ListNode p = L1, q =L2;
+        while (p != null || q != null) {
+            int x = (p == null)? 0: p.getVal();
+            int y = (q == null)? 0: q.getVal();
+            final int sum = x + y + carry;
+            System.out.println(sum % 10);
 
-            while ((curr1 = head2.getNext()) != null) {
-                ListNode temp = result;
-                result = new ListNode(curr1.getVal());
-                result.setNext(temp);
-                curr1 = curr1.getNext();
+            curr.setNext(new ListNode(sum % 10));
+            carry = sum / 10;
+
+            if (p != null) {
+                p = p.getNext();
             }
+
+            if (q != null) {
+                q = q.getNext();
+            }
+            curr = curr.getNext();
         }
 
-        return result;
+        if (carry > 0) {
+            curr.setNext(new ListNode(carry));
+        }
+
+        return curr;
     }
 
     /**
@@ -64,23 +78,23 @@ public class Solution002 {
      * @return
      */
     public static List<ListNode> getListNodes() {
-        ListNode head1 = new ListNode(2);
+        ListNode head1 = new ListNode(1);
 
-        ListNode next1 = new ListNode(5);
-        ListNode next2 = new ListNode(3);
-        ListNode next3 = new ListNode(1);
-        ListNode next4 = new ListNode(6);
+        ListNode next1 = new ListNode(3);
+        ListNode next2 = new ListNode(5);
+        // ListNode next3 = new ListNode(1);
+        // ListNode next4 = new ListNode(6);
 
         head1.setNextAndGet(next1)
-                .setNextAndGet(next2)
-                .setNextAndGet(next3)
-                .setNextAndGet(next4);
+                .setNextAndGet(next2);
+                // .setNextAndGet(next3);
+                // .setNextAndGet(next4);
 
         ListNode head2 = new ListNode(2);
 
-        head2.setNextAndGet(new ListNode(15))
-                .setNextAndGet(new ListNode(8))
-                .setNextAndGet(new ListNode(1));
+        head2.setNextAndGet(new ListNode(4))
+                .setNextAndGet(new ListNode(6));
+                // .setNextAndGet(new ListNode(1));
 
         return Arrays.asList(head1, head2);
     }
@@ -91,11 +105,10 @@ public class Solution002 {
         final StringJoiner joiner = new StringJoiner("->", "[", "]");
         ListNode node = head;
 
-        joiner.add(String.valueOf(node.getVal()));
         do {
-            node = node.getNext();
             joiner.add(String.valueOf(node.getVal()));
-        } while (node.hasNext());
+            node = node.getNext();
+        } while (node != null && node.hasNext());
 
         System.out.println(joiner.toString());
     }
