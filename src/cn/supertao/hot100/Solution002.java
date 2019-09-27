@@ -35,7 +35,8 @@ public class Solution002 {
         printListNode(head1);
         printListNode(head2);
 
-        final ListNode listNode = addTwoNode(head1, head2);
+        final ListNode listNode = addTwoNodeReverse(head1, head2);
+        System.out.println("=========result============");
         printListNode(listNode);
 
 
@@ -51,7 +52,6 @@ public class Solution002 {
             int x = (p == null)? 0: p.getVal();
             int y = (q == null)? 0: q.getVal();
             final int sum = x + y + carry;
-            System.out.println(sum % 10);
 
             curr.setNext(new ListNode(sum % 10));
             carry = sum / 10;
@@ -63,14 +63,56 @@ public class Solution002 {
             if (q != null) {
                 q = q.getNext();
             }
-            curr = curr.getNext();
+            printListNode(dummyHead);
+            if (curr.getNext() != null) {
+                curr = curr.getNext();
+            }
+            printListNode(dummyHead);
         }
 
         if (carry > 0) {
             curr.setNext(new ListNode(carry));
         }
 
-        return curr;
+        return dummyHead.getNext();
+    }
+    public static ListNode addTwoNodeReverse(ListNode L1, ListNode L2) {
+        ListNode dummyHead = new ListNode(0);
+        int carry = 0;
+
+        ListNode p = L1, q =L2;
+        ListNode temp = dummyHead;
+        ListNode curr = temp;
+        while (p != null || q != null) {
+            int x = (p == null)? 0: p.getVal();
+            int y = (q == null)? 0: q.getVal();
+            final int sum = x + y + carry;
+
+ /*           curr = new ListNode(sum % 10);
+
+            curr.setNext(temp);
+
+            temp = curr;
+            carry = sum / 10;*/
+            curr.setNext(new ListNode(sum % 10));
+            curr = curr.getNext();
+            if (p != null) {
+                p = p.getNext();
+            }
+
+            if (q != null) {
+                q = q.getNext();
+            }
+            printListNode(curr);
+        }
+
+        if (carry > 0) {
+/*            curr = new ListNode(carry);
+            curr.setNext(temp);*/
+            curr.setNext(new ListNode(carry));
+        }
+
+        return dummyHead.getNext();
     }
 
     /**
@@ -100,6 +142,7 @@ public class Solution002 {
     }
 
     public static void printListNode(ListNode head) {
+        System.out.println("===========start=========");
         if (head == null) return;
 
         final StringJoiner joiner = new StringJoiner("->", "[", "]");
@@ -108,8 +151,10 @@ public class Solution002 {
         do {
             joiner.add(String.valueOf(node.getVal()));
             node = node.getNext();
-        } while (node != null && node.hasNext());
+        } while (node != null);
 
         System.out.println(joiner.toString());
+        System.out.println("===========end=========");
+        System.out.println();
     }
 }
