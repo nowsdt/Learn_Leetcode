@@ -35,6 +35,7 @@ public class Solution002 {
         printListNode(head1);
         printListNode(head2);
 
+        // final ListNode listNode = addTwoNode(head1, head2);
         final ListNode listNode = addTwoNodeReverse(head1, head2);
         System.out.println("=========result============");
         printListNode(listNode);
@@ -63,11 +64,9 @@ public class Solution002 {
             if (q != null) {
                 q = q.getNext();
             }
-            printListNode(dummyHead);
             if (curr.getNext() != null) {
                 curr = curr.getNext();
             }
-            printListNode(dummyHead);
         }
 
         if (carry > 0) {
@@ -77,12 +76,11 @@ public class Solution002 {
         return dummyHead.getNext();
     }
     public static ListNode addTwoNodeReverse(ListNode L1, ListNode L2) {
-        ListNode dummyHead = new ListNode(0);
         int carry = 0;
 
         ListNode p = L1, q =L2;
-        ListNode temp = dummyHead;
-        ListNode curr = temp;
+        ListNode curr = null;
+        ListNode tmp = null;
         while (p != null || q != null) {
             int x = (p == null)? 0: p.getVal();
             int y = (q == null)? 0: q.getVal();
@@ -93,9 +91,14 @@ public class Solution002 {
             curr.setNext(temp);
 
             temp = curr;
-            carry = sum / 10;*/
-            curr.setNext(new ListNode(sum % 10));
-            curr = curr.getNext();
+            */
+            carry = sum / 10;
+            tmp = new ListNode(sum % 10);
+
+            if (curr != null) {
+                tmp.setNext(curr);
+            }
+            curr = tmp;
             if (p != null) {
                 p = p.getNext();
             }
@@ -103,16 +106,14 @@ public class Solution002 {
             if (q != null) {
                 q = q.getNext();
             }
-            printListNode(curr);
         }
 
         if (carry > 0) {
-/*            curr = new ListNode(carry);
-            curr.setNext(temp);*/
-            curr.setNext(new ListNode(carry));
+            tmp = new ListNode(carry);
+            tmp.setNext(curr);
         }
 
-        return dummyHead.getNext();
+        return tmp;
     }
 
     /**
