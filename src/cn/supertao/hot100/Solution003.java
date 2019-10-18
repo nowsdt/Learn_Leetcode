@@ -1,5 +1,7 @@
 package cn.supertao.hot100;
 
+import java.util.HashSet;
+
 /**
  * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
  *
@@ -28,12 +30,53 @@ package cn.supertao.hot100;
  */
 public class Solution003 {
     public static void main(String[] args) {
-
+        final long start = System.nanoTime();
+        final Integer length = lengthOfLongestSubstring("pwwkewkewf");
+        System.out.println("耗时："+ (System.nanoTime() - start));
+        System.out.println(length);
 
     }
 
-    public static Integer lengthOfLongestSubstring() {
+    public static Integer lengthOfLongestSubstring(String str) {
+        final int length;
+        if (str == null || (length=str.length()) == 0) {
+            return 0;
+        }
 
-        return Integer.MIN_VALUE;
+
+        int max = 0;
+        for (int i = 0; i < length; i++) {
+            for (int j = i+1; j < length; j++) {
+
+                if (allUnique(str, i, j)) {
+                    max = Math.max(max, j-i);
+                }
+            }
+        }
+
+
+        return 0;
+    }
+
+    /**
+     *  字符串是否有重复字符
+     * @param str
+     * @param start
+     * @param end
+     * @return
+     */
+    private static boolean allUnique(String str, int start, int end) {
+        final HashSet<Character> set = new HashSet();
+
+        for (int i = start; i < end; i++) {
+            final char charAt = str.charAt(i);
+            if (set.contains(charAt)) {
+                return false;
+            }
+
+            set.add(charAt);
+        }
+
+        return true;
     }
 }
