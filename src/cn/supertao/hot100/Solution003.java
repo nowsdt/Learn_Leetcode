@@ -1,6 +1,8 @@
 package cn.supertao.hot100;
 
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 /**
  * 给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。
@@ -30,10 +32,13 @@ import java.util.HashSet;
  */
 public class Solution003 {
     public static void main(String[] args) {
-        final long start = System.nanoTime();
-        final Integer length = lengthOfLongestSubstring("pwwkewkewf");
-        System.out.println("耗时："+ (System.nanoTime() - start));
-        System.out.println(length);
+        final List<String> strList = Arrays.asList("abcabcbb", "bbbbb", "pwwkew");
+        for (String str : strList) {
+            final long start = System.nanoTime();
+            final Integer length = lengthOfLongestSubstring(str);
+            System.out.println("耗时："+ (System.nanoTime() - start)  + "ns");
+            System.out.println(length);
+        }
 
     }
 
@@ -46,8 +51,7 @@ public class Solution003 {
 
         int max = 0;
         for (int i = 0; i < length; i++) {
-            for (int j = i+1; j < length; j++) {
-
+            for (int j = i+1; j <= length; j++) {
                 if (allUnique(str, i, j)) {
                     max = Math.max(max, j-i);
                 }
@@ -55,7 +59,7 @@ public class Solution003 {
         }
 
 
-        return 0;
+        return max;
     }
 
     /**
@@ -66,6 +70,7 @@ public class Solution003 {
      * @return
      */
     private static boolean allUnique(String str, int start, int end) {
+        // System.out.println(str.substring(start, end));
         final HashSet<Character> set = new HashSet();
 
         for (int i = start; i < end; i++) {
