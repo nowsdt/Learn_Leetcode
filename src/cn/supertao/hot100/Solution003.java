@@ -39,9 +39,72 @@ public class Solution003 {
             System.out.println("耗时："+ (System.nanoTime() - start)  + "ns");
             System.out.println(length);
         }
+        System.out.println("==============");
+        for (String str : strList) {
+            final long start = System.nanoTime();
+            final Integer length = lengthOfLongestSubstringSmoothWin(str);
+            System.out.println("耗时："+ (System.nanoTime() - start)  + "ns");
+            System.out.println(length);
+        }
 
     }
 
+    /**
+     * 优化的滑动窗口算法
+     *
+     * @param str
+     * @return
+     */
+    public static Integer lengthOfLongestSubstringSmoothWinOpt(String str) {
+        int max = 0;
+        final int length;
+        if (str == null || (length=str.length()) == 0) {
+            return 0;
+        }
+
+
+        return max;
+    }
+
+    /**
+     * 滑动窗口算法
+     *
+     * @param str
+     * @return
+     */
+    public static Integer lengthOfLongestSubstringSmoothWin(String str) {
+        int max = 0;
+        final int length;
+        if (str == null || (length=str.length()) == 0) {
+            return 0;
+        }
+        int i = 0, j = 0;
+        final HashSet<Character> container = new HashSet();
+        while (i < length && j< length) {
+            final char charAt = str.charAt(j++);
+            if (container.contains(charAt)) {
+                container.remove(charAt);
+                i++;
+            } else {
+                container.add(charAt);
+                // max = Math.max(max, j-i );
+                max = Math.max(max, container.size());
+            }
+
+            System.out.println(container);
+
+        }
+
+
+        return max;
+    }
+
+    /**
+     * 穷举
+     *
+     * @param str
+     * @return
+     */
     public static Integer lengthOfLongestSubstring(String str) {
         final int length;
         if (str == null || (length=str.length()) == 0) {
@@ -57,7 +120,6 @@ public class Solution003 {
                 }
             }
         }
-
 
         return max;
     }
