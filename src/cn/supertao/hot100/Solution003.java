@@ -32,7 +32,7 @@ import java.util.List;
  */
 public class Solution003 {
     public static void main(String[] args) {
-        final List<String> strList = Arrays.asList("abcabcbb", "bbbbb", "pwwkew");
+        final List<String> strList = Arrays.asList("abcabcbb"/*, "bbbbb", "pwwkew"*/);
         for (String str : strList) {
             final long start = System.nanoTime();
             final Integer length = lengthOfLongestSubstring(str);
@@ -83,12 +83,11 @@ public class Solution003 {
         while (i < length && j< length) {
             final char charAt = str.charAt(j++);
             if (container.contains(charAt)) {
-                container.remove(charAt);
-                i++;
+                container.remove(str.charAt(i++));
             } else {
                 container.add(charAt);
-                // max = Math.max(max, j-i );
-                max = Math.max(max, container.size());
+                max = Math.max(max, j-i );
+                // max = Math.max(max, container.size());
             }
 
             System.out.println(container);
