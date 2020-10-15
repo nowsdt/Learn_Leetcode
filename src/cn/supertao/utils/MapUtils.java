@@ -1,7 +1,6 @@
 package cn.supertao.utils;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author shidt
