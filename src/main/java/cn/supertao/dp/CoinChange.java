@@ -1,5 +1,6 @@
 package cn.supertao.dp;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ import java.util.Map;
  */
 public class CoinChange {
     private static int[] coins;
-    private static Map<Integer, Integer> memo = new HashMap<>();
+    private static final Map<Integer, Integer> memo = new HashMap<>();
 
     public static void main(String[] args) {
         int[] coins = {1,2,5};
@@ -28,9 +29,17 @@ public class CoinChange {
 
         change1(coins, amount);
         change2(coins, amount);
+        change3(coins, amount);
         System.out.println(memo);
+        System.out.println("coder change the world");
     }
 
+    /**
+     * 自顶向下
+     *
+     * @param coins
+     * @param amount
+     */
     public static void change1(int[] coins, int amount) {
         CoinChange.coins = coins;
         final int cnt = dp1(amount);
@@ -56,6 +65,12 @@ public class CoinChange {
         return result == Integer.MAX_VALUE? -1: result;
     }
 
+    /**
+     * 自顶向下 带备忘录
+     *
+     * @param coins
+     * @param amount
+     */
     public static void change2(int[] coins, int amount) {
         CoinChange.coins = coins;
         final int cnt = dp2(amount);
@@ -93,13 +108,28 @@ public class CoinChange {
     }
 
     /**
-     * 自顶向下
+     * 自底向上
+     * dp 数组的定义：当目标金额为 i 时，至多需要 dp[i] 枚硬币凑出
+     *
      * @param coins
      * @param amount
      */
-    public static void change3(int[] coins, int amount) {
+    public static int change3(int[] coins, int amount) {
         CoinChange.coins = coins;
-        final int cnt = dp2(amount);
-        System.out.println("change2 :" + cnt);
+        int[] dp = new int[amount+1];
+        Arrays.fill(dp, amount);
+
+
+        dp[0] = 0;
+
+        for (int i = 0; i < dp.length; i++) {
+            for (int coin : coins) {
+                if (i - coin < 0) continue;
+                dp[i] = Math.min(dp[i], dp[i-coin] + 1);
+            }
+        }
+        final int result = dp[amount] == amount + 1 ? -1 : dp[amount];
+        System.out.println("change3 :" + result);
+        return result;
     }
 }

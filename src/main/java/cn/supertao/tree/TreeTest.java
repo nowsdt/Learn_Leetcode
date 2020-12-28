@@ -17,7 +17,7 @@ public class TreeTest {
     }
 
     public static TreeNode createBinaryTree(LinkedList<Integer> inputList) {
-        TreeNode node = null;
+        TreeNode<Integer> node = null;
         if (inputList == null || inputList.isEmpty()) {
             return node;
         }
@@ -32,7 +32,7 @@ public class TreeTest {
     }
 
 
-    public static void preOrderTraveral(TreeNode node) {
+    public static void preOrderTraveral(TreeNode<Integer> node) {
         if (node == null) {
             return;
         }

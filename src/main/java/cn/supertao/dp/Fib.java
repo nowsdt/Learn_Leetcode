@@ -2,7 +2,6 @@ package cn.supertao.dp;
 
 import com.google.common.base.Stopwatch;
 
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -10,7 +9,7 @@ import java.util.concurrent.TimeUnit;
  * @date 2020/10/15 10:05
  */
 public class Fib {
-    private static int N = 25;
+    private static final int N = 25;
     public static void main(String[] args) {
 
         final Stopwatch watch = Stopwatch.createStarted();
