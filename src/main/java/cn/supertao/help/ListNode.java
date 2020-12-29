@@ -16,18 +16,21 @@ public class ListNode {
 
 
     public void print() {
-        final StringJoiner joiner = new StringJoiner("-->","[","]");
+        System.out.println(this.toString());
+    }
+
+    @Override
+    public String toString() {
+        final StringJoiner joiner = new StringJoiner("-->", "[", "]");
 
         ListNode head = this;
-        if (head != null) {
-            joiner.add(this.val + "");
 
-            while (head.next != null) {
-                joiner.add(head.next.val + "");
-                head = head.next;
-            }
+        joiner.add(String.valueOf(this.val));
+
+        while (head.next != null) {
+            joiner.add(String.valueOf(head.next.val));
+            head = head.next;
         }
-
-        System.out.println(joiner.toString());
+        return joiner.toString();
     }
 }
