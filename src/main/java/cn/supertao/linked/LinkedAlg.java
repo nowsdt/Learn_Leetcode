@@ -18,14 +18,21 @@ public class LinkedAlg {
         final ListNode node2 = new ListNode(2);
         final ListNode node3 = new ListNode(3);
         final ListNode node4 = new ListNode(4);
+        final ListNode node5 = new ListNode(5);
+        final ListNode node6 = new ListNode(6);
 
         node1.next = node2;
         node2.next = node3;
         node3.next = node4;
+        node4.next = node5;
+        node6.next = node6;
 
-        alg.print(node1);
+        node1.print();
 
-        alg.print(alg.reverse1(node1));
+        // alg.print(alg.reverse1(node1));
+        // alg.print(alg.reverse2(node1));
+        // alg.print(alg.reverseN(node1, 3));
+        alg.reverseN(node1, 3).print();
 
 
     }
@@ -56,10 +63,9 @@ public class LinkedAlg {
            curr.next = pre;
            pre = curr;
            curr = next;
-
         }
 
-        return curr;
+        return pre;
     }
 
 
@@ -67,8 +73,48 @@ public class LinkedAlg {
      * 递归
      *
      */
-    private void reverse2() {
+    private ListNode reverse2(ListNode head) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+        final ListNode last = reverse2(head.next);
+        head.next.next = head;
+        head.next = null;
 
+        return last;
+    }
+
+    ListNode successor = null;
+
+    /**
+     * 递归
+     *
+     */
+    private ListNode reverseN(ListNode head, int n) {
+        if ( n ==1 ) {
+            successor = head.next;
+            return head;
+        }
+
+        final ListNode last = reverseN(head.next, n - 1);
+        head.next.next = head;
+        head.next = successor;
+
+        return last;
+    }
+    /**
+     * 递归
+     *
+     */
+    private ListNode reverseBetween(ListNode head, int start, int end) {
+        if(head == null || head.next == null) {
+            return head;
+        }
+        final ListNode last = reverse2(head.next);
+        head.next.next = head;
+        head.next = null;
+
+        return last;
     }
 
 
@@ -77,15 +123,7 @@ public class LinkedAlg {
      *
      */
     private void print(ListNode head) {
-        final StringJoiner joiner = new StringJoiner("-->","[","]");
 
-        joiner.add(head.val + "");
-        while (head.next != null) {
-            joiner.add(head.next.val + "");
-            head = head.next;
-        }
-
-        System.out.println(joiner.toString());
     }
 
 
