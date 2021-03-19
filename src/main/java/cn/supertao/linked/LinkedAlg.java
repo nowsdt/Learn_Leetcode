@@ -157,8 +157,6 @@ public class LinkedAlg {
             b = b.next;
         }
 
-
-
         final ListNode newHead = reverseBetween(a, b);
         a.next = reverseKGroup(b, k);
 

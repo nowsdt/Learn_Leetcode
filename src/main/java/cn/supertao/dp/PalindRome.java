@@ -36,9 +36,6 @@ public class PalindRome {
             start--;
             end++;
         }
-        System.out.println("============");
-        System.out.println(start + ":" + end);
-        System.out.println("s:" + s+" index start:  " + (start+1) + " end index:" + (end-start - 1));
-        return s.substring(start, end);
+        return s.substring(start + 1, end);
     }
 }
