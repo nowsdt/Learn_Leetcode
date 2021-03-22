@@ -7,10 +7,10 @@ import cn.supertao.help.ListNode;
  * @date 2020/12/21 20:07
  *
  */
-public class LinkedAlg {
+public class LinkedReverse {
 
     public static void main(String[] args) {
-        final LinkedAlg alg = new LinkedAlg();
+        final LinkedReverse alg = new LinkedReverse();
 
         final ListNode node1 = new ListNode(1);
         final ListNode node2 = new ListNode(2);
