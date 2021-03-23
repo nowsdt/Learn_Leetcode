@@ -91,7 +91,16 @@ public class LinkedReverseCp {
      *
      */
     private ListNode reverseN(ListNode head, int n) {
-        return null;
+        if (n == 1) {
+            successor = head.next;
+            return head;
+        }
+        final ListNode last = reverseN(head.next, n - 1);
+
+        head.next.next = head;
+        head.next = successor;
+
+        return last;
 
     }
 
@@ -102,7 +111,11 @@ public class LinkedReverseCp {
      *
      */
     private ListNode reverseBetween(ListNode head, int m, int n) {
+        if (m == 1) {
+            return reverseN(head, n);
+        }
 
+        head.next = reverseBetween(head, m - 1, n - 1);
 
         return head;
     }
