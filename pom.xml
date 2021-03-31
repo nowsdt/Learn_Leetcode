@@ -3,9 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>cn.super</groupId>
-    <artifactId>Learn_Leetcode</artifactId>
+    <artifactId>Learn_Think</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>Learn_Leetcode</name>
+    <name>Learn_Think</name>
     <packaging>jar</packaging>
 
 
@@ -19,6 +19,12 @@
             <artifactId>guava</artifactId>
             <version>30.0-jre</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.4</version>
+        </dependency>
+
     </dependencies>
     <build>
         <plugins>

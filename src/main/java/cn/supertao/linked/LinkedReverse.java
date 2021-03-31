@@ -27,12 +27,12 @@ public class LinkedReverse {
 
         node1.print();
 
-        // alg.print(alg.reverse1(node1));
+        alg.reverse1(node1).print();
         // alg.print(alg.reverse2(node1));
         // alg.print(alg.reverseN(node1, 3));
         // alg.reverseN(node1, 3).print();
         // alg.reverseBetween(node1,2,  3).print();
-        alg.reverseKGroup(node1,2).print();
+        // alg.reverseKGroup(node1,2).print();
 
 
     }
