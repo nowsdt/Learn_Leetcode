@@ -22,27 +22,22 @@ public class BuildTree {
 
     /**
      * 先序遍历
-     * @param preorder 先序遍历结果
-     * @param inorder  中序遍历结果
+     * @param preOrder 先序遍历结果
+     * @param inOrder  中序遍历结果
      * @return
      */
-    private TreeNode<Integer> buildTree(int[] preorder, int[] inorder) {
-        Integer rootVal = preorder[0];
-        int leftVal = preorder[1];
-        int rightVal = inorder[0];
-
-        TreeNode<Integer> root = new TreeNode<>(rootVal);
-
-        return root;
+    private TreeNode<Integer> buildTree(int[] preOrder, int[] inOrder) {
+        return buildPreIn(preOrder, 0, preOrder.length-1, inOrder, 0, inOrder.length - 1);
     }
 
     /**
-     * 中序遍历
+     * 先序遍历，中序遍历
      *
      * @return
      */
-    private TreeNode<Integer> build(int[] preOrder,int preStart, int preEnd,
-                                    int[] inOrder, int inStart, int inEnd) {
+    private TreeNode<Integer> buildPreIn(int[] preOrder, int preStart, int preEnd,
+                                         int[] inOrder, int inStart, int inEnd) {
+        // bad case
         if (preStart > preEnd) return null;
 
         // 先序遍历第一个为根节点
@@ -59,8 +54,39 @@ public class BuildTree {
         int leftSize = index - inStart;
 
         TreeNode<Integer> root = new TreeNode<>(0);
-        root.leftChild = build(preOrder, preStart+1, preStart+leftSize, inOrder, inStart, index - 1);
-        root.rightChild = build(preOrder, preStart+leftSize+1, preEnd, inOrder, index+1, inEnd);
+        root.leftChild = buildPreIn(preOrder, preStart+1, preStart+leftSize, inOrder, inStart, index - 1);
+        root.rightChild = buildPreIn(preOrder, preStart+leftSize+1, preEnd, inOrder, index+1, inEnd);
+
+        return root;
+    }
+
+
+    /**
+     * 先序遍历，中序遍历
+     *
+     * @return
+     */
+    private TreeNode<Integer> buildPostIn(int[] inOrder, int inStart, int inEnd,
+                                          int[] postOrder, int postStart, int postEnd) {
+        // bad case
+        if (postStart > postEnd) return null;
+
+        // 先序遍历第一个为根节点
+        int rootVal = postOrder[postEnd];
+        // 找中序遍历的根节点
+        int index = -1;
+        for (int i = inStart; i <= inEnd; i++) {
+            if (rootVal == inOrder[i]) {
+                index = i;
+                break;
+            }
+        }
+
+        int leftSize = index - inStart;
+
+        TreeNode<Integer> root = new TreeNode<>(0);
+        root.leftChild = buildPostIn(inOrder, inStart, index -1, postOrder, postStart, postStart + leftSize -1);
+        root.rightChild = buildPostIn(inOrder, inStart+1, inEnd, postOrder, postStart+leftSize, postEnd - 1);
 
         return root;
     }
