@@ -4,7 +4,7 @@ package cn.supertao.help;
  * @author shidt
  * @date 2020/10/17 14:51
  */
-public class TreeNode<T> {
+public class TreeNode<T extends Number> {
     public T data;
     public TreeNode leftChild;
     public TreeNode rightChild;
