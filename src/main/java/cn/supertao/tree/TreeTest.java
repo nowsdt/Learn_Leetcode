@@ -4,6 +4,7 @@ import cn.supertao.help.TreeNode;
 
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * @author shidt
@@ -12,34 +13,74 @@ import java.util.LinkedList;
 public class TreeTest {
 
     public static void main(String[] args) {
-        final LinkedList<Integer> inputList = new LinkedList<>(Arrays.asList(3, 2, 9, null, null, 10, null, null, 8, null, 4));
+        // final LinkedList<Integer> inputList = new LinkedList<>(Arrays.asList(3, 2, 9, null, null, 10, null, null, 8, null, 4));
+        // final LinkedList<Integer> inputList = new LinkedList<>(Arrays.asList(1,2, -1, 4, 3, -1,-1));
+        // final LinkedList<Integer> inputList = new LinkedList<>(Arrays.asList(1,2, -1,4, -1,-1, 3, -1, -1));
+        final LinkedList<Integer> inputList = new LinkedList<>(Arrays.asList(1, 2, null, 4, null, null, 3, null, null));
         final TreeNode root = createBinaryTree(inputList);
-        System.out.println();
+        layerTraverse(root);
     }
 
+
+    /**
+     * 先序遍历
+     *
+     * @param inputList
+     * @return
+     */
     public static TreeNode createBinaryTree(LinkedList<Integer> inputList) {
-        TreeNode<Integer> node = null;
-        if (inputList == null || inputList.isEmpty()) {
-            return node;
+        TreeNode<Integer> root = null;
+        if (inputList.isEmpty()) {
+            return null;
         }
         final Integer data = inputList.removeFirst();
         if (data != null) {
-            node = new TreeNode(data);
-            node.leftChild = createBinaryTree(inputList);
-            node.rightChild = createBinaryTree(inputList);
+            root = new TreeNode(data);
+            root.leftChild = createBinaryTree(inputList);
+            root.rightChild = createBinaryTree(inputList);
+            System.out.println("right:" + root.rightChild);
         }
 
-        return node;
+        return root;
     }
 
 
-    public static void preOrderTraveral(TreeNode<Integer> node) {
+    public static void preOrderTraverse(TreeNode<Integer> node) {
         if (node == null) {
             return;
         }
         System.out.println(node.data);
-        preOrderTraveral(node.leftChild);
-        preOrderTraveral(node.rightChild);
+        preOrderTraverse(node.leftChild);
+        preOrderTraverse(node.rightChild);
+    }
+
+
+    /**
+     * 二叉树层级遍历--队列实现
+     *
+     * @param root
+     */
+    public static void layerTraverse(TreeNode<Integer> root) {
+        if (root == null) {
+            return;
+        }
+
+        Queue<TreeNode<Integer>> queue = new LinkedList<>();
+        queue.offer(root);
+
+        while (!queue.isEmpty()) {
+            final TreeNode<Integer> cur = queue.poll();
+            System.out.println(cur.data);
+
+            if (cur.leftChild != null) {
+                queue.offer(cur.leftChild);
+            }
+
+            if (cur.rightChild != null) {
+                queue.offer(cur.rightChild);
+            }
+        }
+
     }
 
     /**
@@ -69,12 +110,12 @@ public class TreeTest {
      * 树拉伸成链表
      * https://mp.weixin.qq.com/s?__biz=MzAxODQxMDM0Mw==&mid=2247487126&idx=1&sn=4de13e66397bc35970963c5a1330ce18&chksm=9bd7f09eaca0798853c41fba05ad5fa958b31054eba18b69c785ae92f4bd8e4cc7a2179d7838&scene=21#wechat_redirect
      */
-    public void flattern(TreeNode root) {
+    public void flatten(TreeNode root) {
         if (root == null) return;
 
         // 左右节点拉平
-        flattern(root.leftChild);
-        flattern(root.rightChild);
+        flatten(root.leftChild);
+        flatten(root.rightChild);
 
 
         final TreeNode leftChild = root.leftChild;

@@ -13,4 +13,15 @@ public class TreeNode<T extends Number> {
     public TreeNode(T data) {
         this.data = data;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("TreeNode{");
+        sb.append("data=").append(data);
+        sb.append(", leftChild=").append(leftChild);
+        sb.append(", rightChild=").append(rightChild);
+        sb.append(", next=").append(next);
+        sb.append('}');
+        return sb.toString();
+    }
 }

@@ -85,8 +85,10 @@ public class BuildTree {
         int leftSize = index - inStart;
 
         TreeNode<Integer> root = new TreeNode<>(0);
-        root.leftChild = buildPostIn(inOrder, inStart, index -1, postOrder, postStart, postStart + leftSize -1);
-        root.rightChild = buildPostIn(inOrder, inStart+1, inEnd, postOrder, postStart+leftSize, postEnd - 1);
+        root.leftChild = buildPostIn(inOrder, inStart, index -1,
+                postOrder, postStart, postStart + leftSize -1);
+        root.rightChild = buildPostIn(inOrder, inStart+1, inEnd,
+                postOrder, postStart+leftSize, postEnd - 1);
 
         return root;
     }
