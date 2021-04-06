@@ -1,6 +1,7 @@
 package cn.supertao.linked;
 
 import cn.supertao.help.ListNode;
+import cn.supertao.utils.ListNodeUtils;
 
 /**
  * @author shidt
@@ -12,27 +13,14 @@ public class LinkedReverse {
     public static void main(String[] args) {
         final LinkedReverse alg = new LinkedReverse();
 
-        final ListNode node1 = new ListNode(1);
-        final ListNode node2 = new ListNode(2);
-        final ListNode node3 = new ListNode(3);
-        final ListNode node4 = new ListNode(4);
-        final ListNode node5 = new ListNode(5);
-        final ListNode node6 = new ListNode(6);
+        final ListNode root = ListNodeUtils.gen();
 
-        node1.next = node2;
-        node2.next = node3;
-        node3.next = node4;
-        node4.next = node5;
-        node5.next = node6;
-
-        node1.print();
-
-        alg.reverse1(node1).print();
-        // alg.print(alg.reverse2(node1));
-        // alg.print(alg.reverseN(node1, 3));
-        // alg.reverseN(node1, 3).print();
-        // alg.reverseBetween(node1,2,  3).print();
-        // alg.reverseKGroup(node1,2).print();
+        alg.reverse1(root).print();
+        // alg.print(alg.reverse2(root));
+        // alg.print(alg.reverseN(root, 3));
+        // alg.reverseN(root, 3).print();
+        // alg.reverseBetween(root,2,  3).print();
+        // alg.reverseKGroup(root,2).print();
 
 
     }
