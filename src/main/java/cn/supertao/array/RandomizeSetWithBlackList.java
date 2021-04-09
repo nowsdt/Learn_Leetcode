@@ -1,11 +1,9 @@
 package cn.supertao.array;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.BlockingQueue;
 
 /**
  *
@@ -16,7 +14,7 @@ import java.util.concurrent.BlockingQueue;
  */
 public class RandomizeSetWithBlackList {
     private Integer SZ;
-    public List<Integer> blackList;
+    // public List<Integer> blackList;
 
 
     public Map<Integer, Integer> valToIndex = new HashMap<>(16);
@@ -25,13 +23,23 @@ public class RandomizeSetWithBlackList {
 
     public RandomizeSetWithBlackList(int N, List<Integer> blackList) {
         this.SZ = N - blackList.size();
-        this.blackList = new ArrayList<>(blackList);
-
-        int last = N -1;
+        // this.blackList = new ArrayList<>(blackList);
 
         for (Integer num : blackList) {
+            valToIndex.put(num, 666);
+        }
+
+        int last = N -1;
+        for (Integer num : blackList) {
+            if (num > SZ) {
+                continue;
+            }
+            while (valToIndex.containsKey(num)) {
+                last--;
+            }
             valToIndex.put(num, last--);
         }
+
 
     }
 
@@ -46,7 +54,6 @@ public class RandomizeSetWithBlackList {
     @Override
     public String toString() {
         return "RandomizeSetWithBlackList{"  +
-                "blackList=" + blackList +
                 ", valToIndex=" + valToIndex +
                 '}';
     }
