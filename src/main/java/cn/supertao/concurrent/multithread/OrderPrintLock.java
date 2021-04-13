@@ -1,8 +1,7 @@
-package cn.supertao.multithread;
+package cn.supertao.concurrent.multithread;
 
 import org.junit.Test;
 
-import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -10,7 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * @date 2021/4/12 9:56
  */
 public class OrderPrintLock {
-    private final Lock lock = new ReentrantLock();
+    private final ReentrantLock lock = new ReentrantLock();
     private int times;
     private int state;
 

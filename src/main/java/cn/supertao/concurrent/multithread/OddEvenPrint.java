@@ -1,4 +1,4 @@
-package cn.supertao.multithread;
+package cn.supertao.concurrent.multithread;
 
 /**
  * @author shidt
