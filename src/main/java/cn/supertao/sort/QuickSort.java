@@ -22,6 +22,12 @@ public class QuickSort {
         System.out.println(Arrays.toString(nums));
     }
 
+    /**
+     * 时间复杂度 o(nlogn)
+     * @param arr
+     * @param lo
+     * @param hi
+     */
     public void quickSort(int[] arr, int lo, int hi) {
         if (lo >= hi) return;
         final int p = partition(arr, lo, hi);

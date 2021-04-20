@@ -28,15 +28,18 @@ public class OrderPrintLock {
                 state++;
                 i++;
                 System.out.println("thread:" + Thread.currentThread().getName() + ": "  + name);
-
-                if (target == 2) {
-                    System.out.println();
-                }
             }
             lock.unlock();
         }
     }
 
+
+    public static void main(String[] args) {
+        final OrderPrintLock printLock = new OrderPrintLock(3);
+        new Thread(() -> printLock.print("B", 1), "B").start();
+        new Thread(() -> printLock.print("A", 0), "A").start();
+        new Thread(() -> printLock.print("C", 2), "C").start();
+    }
     @Test
     public void testResolve() {
         final OrderPrintLock printLock = new OrderPrintLock(3);
