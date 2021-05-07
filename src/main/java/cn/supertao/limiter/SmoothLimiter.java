@@ -1,9 +1,13 @@
 package cn.supertao.limiter;
 
-import java.util.Arrays;
+import java.time.LocalDateTime;
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author shidt
@@ -15,9 +19,9 @@ public class SmoothLimiter extends Limiter{
      */
     private final long qps;
     private final int spilt = 10;
-    private volatile int index = 0;
-    private final long[] counters = new long[spilt];
-    private final ReentrantLock lock = new ReentrantLock();
+    private LinkedList<Long> slots = new LinkedList<>();
+    private volatile static Map<String, LinkedList<Long>> map = new ConcurrentHashMap<>();
+
 
     public SmoothLimiter(Long qps) {
         this.qps = qps;
@@ -30,42 +34,56 @@ public class SmoothLimiter extends Limiter{
      */
     @Override
     public boolean  tryAcquire() {
-        lock.lock();
-        slideWindow();
-        final long count = Arrays.stream(counters).sum();
-        lock.unlock();
-        if (count >= qps) {
+        return Boolean.TRUE;
+    }
+
+    /**
+     *
+     * TODO 未必完善
+     * @param id
+     * @param count
+     * @param timeWindow 毫秒
+     * @return
+     */
+    public static boolean acquire(String id, int count, long timeWindow) {
+        final long now = System.currentTimeMillis();
+        final LinkedList<Long> list = map.computeIfAbsent(id, k -> new LinkedList<>());
+        if (list.size() < count) {
+            list.addFirst(now);
+            return Boolean.TRUE;
+        }
+        final Long farTime = list.getLast();
+
+        if (now -farTime <= timeWindow) {
             return false;
         } else {
-            counters[index]++;
+            list.removeLast();
+            list.addFirst(now);
             return true;
         }
 
     }
 
-    private void slideWindow() {
-        for (int i = 0; i < spilt; i++) {
-            System.out.println("index0: " + index);
-            index = (index + 1) % spilt;
-            System.out.println("index1: " + index);
-            System.out.println("============");
-            counters[index] = 0;
-        }
-        System.out.println();
-        System.out.println(Arrays.toString(counters));
-        System.out.println("------------------");
-    }
 
     public static void main(String[] args) {
         final ExecutorService service = Executors.newFixedThreadPool(20);
 
+        final Random random = new Random();
+
         final SmoothLimiter limiter = new SmoothLimiter(5L);
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 1000; i++) {
             service.submit(() -> {
-                final boolean b = limiter.tryAcquire();
-                System.out.println(b);
+                final boolean b = acquire("list", 3, 10 * 1000L);
+                System.out.println(LocalDateTime.now().toString() + " "+  b);
+                try {
+                    TimeUnit.SECONDS.sleep(random.nextInt(5));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
             });
         }
+        service.shutdown();
     }
 
 }
