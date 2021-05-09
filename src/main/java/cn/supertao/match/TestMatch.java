@@ -12,7 +12,8 @@ public class TestMatch {
 
     @Test
     public void test1() {
-        assert testBracketMatch("([][][][]))");
+        assert testBracketMatch("([][][][])");
+        assert testBracketMatch0("([][][][])");
     }
 
 
@@ -38,10 +39,6 @@ public class TestMatch {
                 continue;
             }
 
-            System.out.println(charAt);
-            System.out.println("==before==");
-            System.out.println(stack);
-
             if (charAt == '}' && stack.peek() == '{') {
                 stack.pop();
             }
@@ -57,13 +54,24 @@ public class TestMatch {
                 stack.push(charAt);
             }
 
-            System.out.println("==after==");
-            System.out.println(stack);
-            System.out.println();
-            System.out.println();
         }
 
-        System.out.println(stack);
         return stack.isEmpty();
+    }
+    public boolean testBracketMatch0(String input) {
+        if (input == null || input.length() == 0) {
+            return Boolean.TRUE;
+        }
+
+        while (true) {
+            int len = input.length();
+            input = input.replace("()","");
+            input = input.replace("{}","");
+            input  = input.replace("[]","");
+            if (input.length() == len) {
+                break;
+            }
+        }
+        return input.length() == 0;
     }
 }
