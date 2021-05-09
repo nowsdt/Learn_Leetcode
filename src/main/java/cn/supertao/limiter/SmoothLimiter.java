@@ -19,7 +19,6 @@ public class SmoothLimiter extends Limiter{
      */
     private final long qps;
     private final int spilt = 10;
-    private LinkedList<Long> slots = new LinkedList<>();
     private volatile static Map<String, LinkedList<Long>> map = new ConcurrentHashMap<>();
 
 

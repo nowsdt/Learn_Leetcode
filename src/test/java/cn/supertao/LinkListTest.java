@@ -13,35 +13,61 @@ public class LinkListTest {
     @Test
     public void testReverse() {
         final ListNode head = ListNodeUtils.gen();
-        final ListNode node = reverseNode(head);
-        node.print();
-        reverseNode1(node).print();
+        // reverse(head).print();
+        reverseKGroup(head, 2).print();
     }
 
-    public ListNode reverseNode(ListNode head) {
+    private ListNode reverse(ListNode head) {
         if (head == null || head.next == null) {
             return head;
         }
-        final ListNode node = reverseNode(head.next);
+
+        final ListNode newHead = reverse(head.next);
+
         head.next.next = head;
         head.next = null;
-        return node;
+
+        return newHead;
     }
 
-    public ListNode reverseNode1(ListNode head) {
-        if (head == null || head.next == null) {
-            return head;
+
+
+
+    private ListNode reverseKGroup(ListNode head, int k) {
+        if (head == null) {
+            return null;
         }
+        ListNode a = head, b = head;
+        for (int i = 0; i < k; i++) {
+            if (b == null) return head;
+            b = b.next;
+        }
+        final ListNode newHead = reverseBetween(a, b);
 
-        ListNode pre = null, cur = head, next = head.next;
+        a.next = reverseKGroup(b, k);
 
-        while (next != null) {
+        return newHead;
+
+    }
+
+    /**
+     * 反转区间[a,b) 不包括b
+     *
+     * @param head
+     * @param node
+     * @return
+     */
+    private ListNode reverseBetween(ListNode head, ListNode node) {
+        ListNode cur = head, next = head, pre = null;
+
+        while (cur != node) {
             next = cur.next;
             cur.next = pre;
             pre = cur;
             cur = next;
         }
-
         return pre;
     }
+
+
 }
