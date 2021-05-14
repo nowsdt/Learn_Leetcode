@@ -168,4 +168,34 @@ public class Test {
         System.out.println(Arrays.toString(a));
     }
 
+
+    @org.junit.Test
+    public void testBracket() {
+        assert bracketMatch("{((()))}");
+    }
+
+    private boolean bracketMatch(String s) {
+        Stack<Character> stack = new Stack<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            final char c = s.charAt(i);
+            if (stack.isEmpty()) {
+                stack.push(c);
+                continue;
+            }
+
+            if (c == ')' && stack.peek() == '(') {
+                stack.pop();
+            } else if (c == ']' && stack.peek() == '[') {
+                stack.pop();
+            } else if (c == '}' && stack.peek() == '{') {
+                stack.pop();
+            } else {
+                stack.push(c);
+            }
+        }
+
+        return stack.isEmpty();
+    }
+
 }
